@@ -2,10 +2,10 @@ import os
 from pathlib import Path
 import logging
 
-logging.basicConfig(level=logging.INFO, format= '[%asctime)s] : %(message)s:')
+# Fixing the format for the timestamp in the logging
+logging.basicConfig(level=logging.INFO, format='[%(asctime)s] : %(message)s:')
 
 project_name = "chicken_disease_classification"
-
 
 list_of_files = [
     ".github/workflows/.gitkeep",
@@ -20,26 +20,21 @@ list_of_files = [
     "config/config.yaml",
     "dvc.yaml",
     "params.yaml",
-    "requiremnets.txt",
+    "requirements.txt",  
     "setup.py",
-    "research/trails.ipynb"
-    
+    "research/trials.ipynb"  
 ]
 
 for file_path in list_of_files:
     file_path = Path(file_path)
-
     filedir, filename = os.path.split(file_path)
 
-    if filedir !="":
-
+    if filedir:
         os.makedirs(filedir, exist_ok=True)
-        logging.info( f"creating dir ; {filedir} for the file : {filename}" )
+        logging.info(f"Creating directory: {filedir} for the file: {filename}")
 
-    if (not os.path.exists(file_path)) or (os.path.getsize(file_path)==0):
-        with open(file_path, "w" ) as f:
-            pass
-            logging.info(f"creating empty file: {file_path}")
-    
+    if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
+        with open(file_path, "w") as f:
+            logging.info(f"Creating empty file: {file_path}")
     else:
-        logging.info(f"{filename} is already exits")
+        logging.info(f"{filename} already exists")
